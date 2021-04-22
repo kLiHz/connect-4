@@ -281,6 +281,7 @@ void C4_Text_Interface::display_status() {
     auto current_rounds = instance->get_rounds();
     if (instance->is_over()) {
         cout << "Game over! ";
+        auto winner = instance->get_winner();
         if (winner == ChessGame::SUBJECT::NEUTRAL) { cout << "Draw!"<<endl; }
         else {
             std::cout << instance->get_name_tag(winner) << " wins!"<<endl;
@@ -328,7 +329,6 @@ void C4_Text_Interface::play() {
 
     while(!instance->is_over())
     {
-        //rounds++;
         display_status();
 
         auto mover_this_round = instance->get_mover_this_round();
@@ -343,8 +343,6 @@ void C4_Text_Interface::play() {
         {
             get_player_move_input();
         }
-
-        winner = instance->win_check();
     }
 
     display_status();

@@ -187,6 +187,7 @@ bool Connect4::make_move(C4_Move& tmove) {
         if (rounds % 2 == 1) map[used[tmove.col]-1][tmove.col] = 1;
         else if (rounds % 2 == 0) map[used[tmove.col]-1][tmove.col] = 2;
         history_moves[rounds-1] = tmove;
+        winner = this->win_check();
         rounds++;
         return true;
     }
@@ -242,7 +243,7 @@ ChessGame::SUBJECT Connect4::win_check()
 {
     SUBJECT mover_this_round = this->get_mover_this_round();
 
-    int last_move_col = history_moves[rounds-1].col;
+    int last_move_col = history_moves[rounds - 1].col;
     int last_move_row = used[last_move_col] - 1;
 
     int check = map[last_move_row][last_move_col]; // mover symbol of this round

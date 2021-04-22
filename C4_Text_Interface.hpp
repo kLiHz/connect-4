@@ -26,8 +26,6 @@ private:
     void mapsize_change_with_notif(int rowNum, int colNum);
     void get_player_move_input();
 
-    ChessGame::SUBJECT winner;
-
 public:
     C4_Text_Interface();
     void play();

@@ -42,8 +42,6 @@ public:
     auto get_row() { return this->rowNum; }
     auto get_col() { return this->colNum; }
 
-
-
     ChessGame::SUBJECT win_check();
 
     bool is_over() { return is_game_over; }

@@ -30,8 +30,10 @@ public:
     auto get_name_tag(ChessGame::SUBJECT subj) { return name_tags[subj]; }
     
     auto get_rounds() { return rounds; }
+    SUBJECT get_winner() { return winner; }
 
     virtual SUBJECT win_check() = 0;
+    virtual bool is_over() = 0;
 
 protected:
     int rounds;
