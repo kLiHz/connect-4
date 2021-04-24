@@ -309,49 +309,53 @@ void C4_Text_Interface::get_player_move_input() {
 }
 
 void C4_Text_Interface::play() {
-    int choice = 0;
-    while (choice != 1 && choice != 3)
-    {
-        cout<<"# Welcome to play 'Connect 4' in console!"<<endl;
-        cout<<"- 1. Play;\n- 2. Change user prefs;\n- 3. Exit."<<endl;
 
-        choice = get_int_choice_between(1,3);
+    bool playing = true;
 
-        if (choice == 2) this->custom_settings();
-        if (choice == 3) { return; }
-    }
+    while (playing) {
 
-    this->gamemode_firstmover_setting_UI();
+        int choice = 0;
+        while (choice != 1 && choice != 3)
+        {
+            cout<<"# Welcome to play 'Connect 4' in console!"<<endl;
+            cout<<"- 1. Play;\n- 2. Change user prefs;\n- 3. Exit."<<endl;
 
-    instance->reset();
+            choice = get_int_choice_between(1,3);
 
-    cout<<"# Game starts!"<<endl;
+            if (choice == 2) this->custom_settings();
+            if (choice == 3) { playing = false; }
+        }
 
-    while(!instance->is_over())
-    {
+        if (!playing) break;
+
+        this->gamemode_firstmover_setting_UI();
+        instance->reset();
+
+        cout<<"# Game starts!"<<endl;
+
+        while(!instance->is_over())
+        {
+            display_status();
+
+            auto mover_this_round = instance->get_mover_this_round();
+
+            std::cout << instance->get_name_tag(mover_this_round) << "'s turn: ";
+
+            if (mover_this_round == ChessGame::SUBJECT::COMPUTER)
+            {
+                instance->computer_make_move();
+            }
+            else 
+            {
+                get_player_move_input();
+            }
+        }
+
         display_status();
 
-        auto mover_this_round = instance->get_mover_this_round();
+        cout<<"# Would you like to try again?"<<endl;
+        cout<<"- 1. Yes; \n- 2. No. "<<endl;
 
-        std::cout << instance->get_name_tag(mover_this_round) << "'s turn: ";
-
-        if (mover_this_round == ChessGame::SUBJECT::COMPUTER)
-        {
-            instance->computer_make_move();
-        }
-        else 
-        {
-            get_player_move_input();
-        }
+        if (get_int_choice_between(1,2) == 2) playing = false;
     }
-
-    display_status();
-
-    cout<<"# Would you like to try again?"<<endl;
-    cout<<"- 1. Yes; \n- 2. No. "<<endl;
-
-    choice = get_int_choice_between(1,2);
-
-    if (choice == 1) return play();
-    else if (choice == 2) return;
 }
