@@ -31,8 +31,6 @@ int get_int_choice_between(int a, int b) {
 
 C4_Text_Interface::C4_Text_Interface() {
 
-    instance = std::make_shared<Connect4>();
-
     this->firstmover_symbol         = '$';
     this->secondmover_symbol        = '*';
     this->blank_chessboard_symbol   = '-';
@@ -309,6 +307,8 @@ void C4_Text_Interface::get_player_move_input() {
 }
 
 void C4_Text_Interface::play() {
+
+    if (!instance) { std::cerr << "No instance was set!"; }
 
     bool playing = true;
 

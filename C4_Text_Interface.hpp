@@ -28,7 +28,9 @@ private:
 
 public:
     C4_Text_Interface();
+    C4_Text_Interface(std::shared_ptr<Connect4> game) : C4_Text_Interface() { instance = game; }
     void play();
+    void change_instance(std::shared_ptr<Connect4> game) { instance = game; };
 };
 
 void trim(std::string &str);
