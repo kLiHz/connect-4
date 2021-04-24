@@ -203,27 +203,26 @@ void Connect4::computer_make_move()
 
     // finding 1-to-win place 
     cmove = this->find_win(check);
-    if (cmove.col != -1) { this->make_move(cmove); return; }
+    if (cmove.col != -1) { if (this->make_move(cmove)) return; }
 
     // if opponent's 1-to-win, block
     cmove = this->find_win(oppo_check);
-    if (cmove.col != -1) { this->make_move(cmove); return; }
+    if (cmove.col != -1) { if (this->make_move(cmove)) return; }
 
     // can block opponent
     cmove = this->find_block(oppo_check);
-    if (cmove.col != -1) { this->make_move(cmove); return; }
+    if (cmove.col != -1) { if (this->make_move(cmove)) return; }
 
     // can connect myself
     cmove = this->find_block(check); 
-    if (cmove.col != -1) { this->make_move(cmove); return; }
+    if (cmove.col != -1) { if (this->make_move(cmove)) return; }
 
     
     //drop a chess on its own chess
     for (int i = 0; i< colNum ;i++) {
         if((used[i] > 0 && used[i] < rowNum && map[used[i]][i] == check)){
             cmove.col = i;
-            this-> make_move(cmove);
-            return;
+            if (this-> make_move(cmove)) return;
         }
     }
 
