@@ -2,7 +2,7 @@
 
 ChessGame::ChessGame()
 {
-    rounds = 1;
+    move_cnt = 0;
     is_game_over = false;
     firstmover = SUBJECT::NEUTRAL;
     gamemode = GAME_MODE::DEFAULT;

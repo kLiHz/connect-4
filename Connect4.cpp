@@ -19,7 +19,7 @@ void Connect4::regenerate_map() {
 void Connect4::reset()
 {
     this->regenerate_map();
-    rounds = 1; 
+    move_cnt = 1; 
     is_game_over = false;
 }
 
@@ -184,11 +184,10 @@ bool Connect4::make_move(C4_Move& tmove) {
     if (used[tmove.col] >= rowNum) return false;
     else {
         used[tmove.col]++;
-        if (rounds % 2 == 1) map[used[tmove.col]-1][tmove.col] = 1;
-        else if (rounds % 2 == 0) map[used[tmove.col]-1][tmove.col] = 2;
-        history_moves[rounds-1] = tmove;
-        winner = this->win_check();
-        rounds++;
+        if (get_mover_this_round() == firstmover) map[used[tmove.col]-1][tmove.col] = 1;
+        else map[used[tmove.col]-1][tmove.col] = 2;
+        history_moves[move_cnt-1] = tmove;
+        this->finish_move();
         return true;
     }
 }
@@ -242,7 +241,7 @@ ChessGame::SUBJECT Connect4::win_check()
 {
     SUBJECT mover_this_round = this->get_mover_this_round();
 
-    int last_move_col = history_moves[rounds - 1].col;
+    int last_move_col = history_moves[move_cnt - 1].col;
     int last_move_row = used[last_move_col] - 1;
 
     int check = map[last_move_row][last_move_col]; // mover symbol of this round
@@ -284,7 +283,7 @@ ChessGame::SUBJECT Connect4::win_check()
     while (ti < rowNum && tj >= 0 && map[ti][tj] == check) { cnt++; ti++; tj--; }
     if (cnt >= 4) {is_game_over = true; return mover_this_round;}
     
-    if (rounds == rowNum * colNum) is_game_over = true;
+    if (move_cnt == rowNum * colNum) is_game_over = true;
 
     return ChessGame::SUBJECT::NEUTRAL;
 }

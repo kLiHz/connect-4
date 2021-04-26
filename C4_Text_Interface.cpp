@@ -276,7 +276,7 @@ void C4_Text_Interface::display_status() {
     // print map
     output_map();
     // print info
-    auto current_rounds = instance->get_rounds();
+    auto current_rounds = instance->get_move_cnt();
     if (instance->is_over()) {
         cout << "Game over! ";
         auto winner = instance->get_winner();
@@ -284,7 +284,7 @@ void C4_Text_Interface::display_status() {
         else {
             std::cout << instance->get_name_tag(winner) << " wins!"<<endl;
         }
-        cout << "Total rounds: " << current_rounds << endl;
+        cout << "Total moves: " << current_rounds << endl;
     }
     else { cout << "Round: " << current_rounds << endl; }
     cout << "History: ";
